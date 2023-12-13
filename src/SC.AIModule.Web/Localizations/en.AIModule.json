@@ -1,0 +1,28 @@
+{
+  "AIModule": {
+    "blades": {
+      "hello-world": {
+        "title": "Hello world blade"
+      }
+    }
+  },
+  "permissions": {
+    "AIModule:access": "Open AIModule menu",
+    "AIModule:create": "Create AIModule related data",
+    "AIModule:read": "View AIModule related data",
+    "AIModule:update": "Update AIModule related data",
+    "AIModule:delete": "Delete AIModule related data"
+  },
+  "settings": {
+    "AIModule": {
+      "AIModuleEnabled": {
+        "title": "AIModule Enabled",
+        "description": "AIModule Enabled setting"
+      },
+      "AIModulePassword": {
+        "title": "AIModule Password",
+        "description": "AIModule Password setting"
+      }
+    }
+  }
+}
