@@ -9,14 +9,14 @@
     <!--<dependency id="VirtoCommerce.Core" version="3.211.0" />-->
   </dependencies>
 
-  <title>SC AIModule module</title>
-  <description>SC AIModule module</description>
+  <title>Sharpcode OpenAi module</title>
+  <description>Sharpcode OpenAi module</description>
 
   <authors>
-    <author>John Doe</author>
+    <author>Sharpcode</author>
   </authors>
   <owners>
-    <owner>SC</owner>
+    <owner>Sharpcode</owner>
   </owners>
 
   <projectUrl>https://github.com/SC/vc-module-ai-module</projectUrl>
@@ -28,6 +28,5 @@
 
   <releaseNotes>First version.</releaseNotes>
   <copyright>Copyright © 2023 SC. All rights reserved</copyright>
-  <tags>extension module</tags>
   <useFullTypeNameInSwagger>false</useFullTypeNameInSwagger>
 </module>

@@ -15,26 +15,29 @@ using System.Diagnostics;
 using Newtonsoft.Json;
 using SharpCode.OpenAiModule.Core.Models;
 using SharpCode.OpenAiModule.Core.Utilities;
+using Microsoft.Extensions.Logging;
 
 namespace SharpCode.OpenAiModule.Data.Services
 {
-    public class OpenAIClient : IOpenAiClient
+    public class OpenAiClient : IOpenAiClient
     {
         private readonly IOpenAIService _openAiService;
         private readonly OpenAiOptions _openAiOptions;
+        private readonly ILogger<OpenAiClient> _logger;
 
-        public OpenAIClient(IOptions<OpenAiOptions> openAiOptions)
+        public OpenAiClient(IOptions<OpenAiOptions> openAiOptions, ILogger<OpenAiClient> logger)
         {
             _openAiOptions = openAiOptions.Value;
             _openAiService = new OpenAIService(new OpenAiOptions()
             {
                 ApiKey = _openAiOptions.ApiKey,
             });
+            _logger = logger;
         }
 
         public async Task<string> UseOpenAiClient(string model, string systemMessage, string userMessage, int maxTokens = 2000)
         {
-            Stopwatch stopwatch = Stopwatch.StartNew();
+            var stopwatch = Stopwatch.StartNew();
             var completionResult = await _openAiService.ChatCompletion.CreateCompletion(new ChatCompletionCreateRequest
             {
                 Messages = new List<ChatMessage>
@@ -47,8 +50,8 @@ namespace SharpCode.OpenAiModule.Data.Services
             });
             stopwatch.Stop();
 
-            Console.WriteLine("Time Taken: " + JsonConvert.SerializeObject(stopwatch.Elapsed));
-            Console.WriteLine("Usage: " + JsonConvert.SerializeObject(completionResult.Usage));
+            _logger.LogDebug("Time Taken: " + JsonConvert.SerializeObject(stopwatch.Elapsed));
+            _logger.LogDebug("Usage: " + JsonConvert.SerializeObject(completionResult.Usage));
             
             if (completionResult.Successful)
             {
@@ -61,6 +64,7 @@ namespace SharpCode.OpenAiModule.Data.Services
 
         public async Task<string> UseOpenAiImageClient(GenerateImageRequest generateImageRequest)
         {
+            var stopwatch = Stopwatch.StartNew();
             var imageResult = await _openAiService.Image.CreateImage(new ImageCreateRequest
             {
                 Prompt = generateImageRequest.Prompt,
@@ -72,7 +76,10 @@ namespace SharpCode.OpenAiModule.Data.Services
                 Model = generateImageRequest.Model.ToLowercaseString(),
                 Style = generateImageRequest.Style.ToString()
             });
-            
+            stopwatch.Stop();
+
+            _logger.LogDebug("Time Taken: " + JsonConvert.SerializeObject(stopwatch.Elapsed));
+
             if (imageResult.Successful)
             {
                 return (string.Join("\n", imageResult.Results.Select(r => r.Url)));

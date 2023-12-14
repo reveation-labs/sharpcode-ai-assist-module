@@ -40,7 +40,7 @@ public class Module : IModule, IHasConfiguration
 
         // Register services
         serviceCollection.AddTransient<IOpenAiService, OpenAiService>();
-        serviceCollection.AddTransient<IOpenAiClient, OpenAIClient>();
+        serviceCollection.AddTransient<IOpenAiClient, OpenAiClient>();
     }
 
     public void PostInitialize(IApplicationBuilder appBuilder)
@@ -54,7 +54,7 @@ public class Module : IModule, IHasConfiguration
         // Register permissions
         var permissionsRegistrar = serviceProvider.GetRequiredService<IPermissionsRegistrar>();
         permissionsRegistrar.RegisterPermissions(ModuleConstants.Security.Permissions.AllPermissions
-            .Select(x => new Permission { ModuleId = ModuleInfo.Id, GroupName = "AIModule", Name = x })
+            .Select(x => new Permission { ModuleId = ModuleInfo.Id, GroupName = "OpenAiModule", Name = x })
             .ToArray());
 
         // Apply migrations

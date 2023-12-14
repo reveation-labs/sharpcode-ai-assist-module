@@ -21,6 +21,10 @@ namespace SharpCode.OpenAiModule.Core.Models
                 }
                 if (request.Model == OpenAiImageModels.Models.Dall_e_2)
                 {
+                    if(request.Prompt.Length > 1000)
+                    {
+                        context.AddFailure(new ValidationFailure(nameof(request.Prompt), "Prompt length cannot be more than 1000 characters for Dall-e-2"));
+                    }
                     if(request.N > 10)
                     {
                         context.AddFailure(new ValidationFailure(nameof(request.N), "N cannot be more than 10 for Dall-e-2"));
@@ -36,6 +40,10 @@ namespace SharpCode.OpenAiModule.Core.Models
                 }
                 else if (request.Model == OpenAiImageModels.Models.Dall_e_3)
                 {
+                    if (request.Prompt.Length > 4000)
+                    {
+                        context.AddFailure(new ValidationFailure(nameof(request.Prompt), "Prompt length cannot be more than 4000 characters for Dall-e-3"));
+                    }
                     if (request.N != 1)
                     {
                         context.AddFailure(new ValidationFailure(nameof(request.N), "N cannot be more than 1 for Dall-e-3"));
