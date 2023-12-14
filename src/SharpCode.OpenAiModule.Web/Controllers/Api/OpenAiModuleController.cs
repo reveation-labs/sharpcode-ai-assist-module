@@ -28,7 +28,7 @@ namespace SharpCode.OpenAiModule.Web.Controllers.Api
         [HttpGet]
         [Route("generate")]
         [Authorize(ModuleConstants.Security.Permissions.Access)]
-        public async Task<ActionResult<string>> Generate(string prompt, int descLength = 100)
+        public async Task<ActionResult<string>> Generate(string productId, string prompt, int descLength = 100)
         {
             if(prompt == null)
             {
@@ -37,7 +37,7 @@ namespace SharpCode.OpenAiModule.Web.Controllers.Api
 
             try
             {
-                return await _aiService.GenerateDescription(prompt, descLength);
+                return await _aiService.GenerateDescription(productId, prompt, descLength);
             }
             catch (Exception ex)
             {
@@ -72,7 +72,7 @@ namespace SharpCode.OpenAiModule.Web.Controllers.Api
         [HttpGet]
         [Route("rephrase")]
         [Authorize(ModuleConstants.Security.Permissions.Access)]
-        public async Task<ActionResult<string>> Rephrase(string text)
+        public async Task<ActionResult<string>> Rephrase(string text, string tone = "SEO friendly")
         {
             if (text == null)
             {
@@ -81,7 +81,7 @@ namespace SharpCode.OpenAiModule.Web.Controllers.Api
 
             try
             {
-                return await _aiService.RephraseDescription(text);
+                return await _aiService.RephraseDescription(text, tone);
             }
             catch (Exception ex)
             {

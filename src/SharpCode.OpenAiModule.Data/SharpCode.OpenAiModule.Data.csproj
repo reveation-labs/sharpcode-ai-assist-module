@@ -8,10 +8,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Betalgo.OpenAI" Version="7.4.3" />
- 
-
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Include="VirtoCommerce.Platform.Data" Version="3.253.1" />
+    <PackageReference Include="VirtoCommerce.CatalogModule.Data" Version="3.230.4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpCode.OpenAiModule.Core\SharpCode.OpenAiModule.Core.csproj" />
