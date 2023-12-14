@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+  <id>SharpCode.OpenAiModule</id>
+  <version>3.200.0</version>
+  <version-tag></version-tag>
+
+  <platformVersion>3.253.1</platformVersion>
+  <dependencies>
+    <!--<dependency id="VirtoCommerce.Core" version="3.211.0" />-->
+  </dependencies>
+
+  <title>SC AIModule module</title>
+  <description>SC AIModule module</description>
+
+  <authors>
+    <author>John Doe</author>
+  </authors>
+  <owners>
+    <owner>SC</owner>
+  </owners>
+
+  <projectUrl>https://github.com/SC/vc-module-ai-module</projectUrl>
+  <iconUrl>Modules/$(SharpCode.OpenAiModule)/Content/logo.png</iconUrl>
+  <requireLicenseAcceptance>false</requireLicenseAcceptance>
+
+  <assemblyFile>SharpCode.OpenAiModule.Web.dll</assemblyFile>
+  <moduleType>SharpCode.OpenAiModule.Web.Module, SharpCode.OpenAiModule.Web</moduleType>
+
+  <releaseNotes>First version.</releaseNotes>
+  <copyright>Copyright © 2023 SC. All rights reserved</copyright>
+  <tags>extension module</tags>
+  <useFullTypeNameInSwagger>false</useFullTypeNameInSwagger>
+</module>
