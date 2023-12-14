@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SC.AIModule.Core.Models;
 
 namespace SC.AIModule.Core.Services
 {
-    public interface IAIService
+    public interface IOpenAiService
     {
         public Task<string> GenerateDescription(string model, string prompt, int descLength);
 
@@ -14,7 +15,7 @@ namespace SC.AIModule.Core.Services
 
         public Task<string> RephraseDescription(string model, string text);
 
-        public Task<string> GenerateImage(string model, string prompt, string size, int numOfImages, string quality);
+        public Task<string> GenerateImage(GenerateImageRequest generateImageRequest);
 
     }
 }

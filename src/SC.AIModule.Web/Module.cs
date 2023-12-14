@@ -39,8 +39,8 @@ public class Module : IModule, IHasConfiguration
         //AbstractTypeFactory<OriginalEntity>.OverrideType<OriginalEntity, ExtendedEntity>();
 
         // Register services
-        serviceCollection.AddTransient<IAIService, AIService>();
-        serviceCollection.AddTransient<IOpenAIClient, OpenAIClient>();
+        serviceCollection.AddTransient<IOpenAiService, OpenAiService>();
+        serviceCollection.AddTransient<IOpenAiClient, OpenAIClient>();
     }
 
     public void PostInitialize(IApplicationBuilder appBuilder)

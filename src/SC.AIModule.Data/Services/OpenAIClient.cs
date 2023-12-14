@@ -13,27 +13,29 @@ using OpenAI.ObjectModels;
 using System.Diagnostics;
 /*using System.Text.Json.Serialization;*/
 using Newtonsoft.Json;
+using SC.AIModule.Core.Models;
+using SC.AIModule.Core.Utilities;
 
 namespace SC.AIModule.Data.Services
 {
-    public class OpenAIClient : IOpenAIClient
+    public class OpenAIClient : IOpenAiClient
     {
-        private readonly IOpenAIService _openAIService;
+        private readonly IOpenAIService _openAiService;
         private readonly OpenAiOptions _openAiOptions;
 
         public OpenAIClient(IOptions<OpenAiOptions> openAiOptions)
         {
             _openAiOptions = openAiOptions.Value;
-            _openAIService = new OpenAIService(new OpenAiOptions()
+            _openAiService = new OpenAIService(new OpenAiOptions()
             {
                 ApiKey = _openAiOptions.ApiKey,
             });
         }
 
-        public async Task<string> UseOpenAIClient(string model, string systemMessage, string userMessage, int maxTokens = 2000)
+        public async Task<string> UseOpenAiClient(string model, string systemMessage, string userMessage, int maxTokens = 2000)
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
-            var completionResult = await _openAIService.ChatCompletion.CreateCompletion(new ChatCompletionCreateRequest
+            var completionResult = await _openAiService.ChatCompletion.CreateCompletion(new ChatCompletionCreateRequest
             {
                 Messages = new List<ChatMessage>
                 {
@@ -57,18 +59,18 @@ namespace SC.AIModule.Data.Services
 
         }
 
-        public async Task<string> UseOpenAIImageClient(string model, string prompt, string size, int numOfImages, string quality)
+        public async Task<string> UseOpenAiImageClient(GenerateImageRequest generateImageRequest)
         {
-            var imageResult = await _openAIService.Image.CreateImage(new ImageCreateRequest
+            var imageResult = await _openAiService.Image.CreateImage(new ImageCreateRequest
             {
-                Prompt = prompt,
-                N = numOfImages,
-                Size = size,
-                ResponseFormat = StaticValues.ImageStatics.ResponseFormat.Url,
-                Quality = quality,
+                Prompt = generateImageRequest.Prompt,
+                N = generateImageRequest.N,
+                Size = generateImageRequest.Size.SizeConverter(),
+                ResponseFormat = generateImageRequest.ResponseFormat.ToString(),
+                Quality = generateImageRequest.Quality.ToString(),
                 User = "TestUser",
-                Model = model,
-                Style = StaticValues.ImageStatics.Style.Natural
+                Model = generateImageRequest.Model.ToLowercaseString(),
+                Style = generateImageRequest.Style.ToString()
             });
             
             if (imageResult.Successful)
