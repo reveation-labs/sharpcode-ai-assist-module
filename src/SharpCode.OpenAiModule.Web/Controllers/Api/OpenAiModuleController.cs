@@ -28,7 +28,7 @@ namespace SharpCode.OpenAiModule.Web.Controllers.Api
         [HttpGet]
         [Route("generate")]
         [Authorize(ModuleConstants.Security.Permissions.Access)]
-        public async Task<ActionResult<string>> Generate(string prompt, OpenAiTextModels model = OpenAiTextModels.Gpt_3__5_Turbo_1106, int descLength = 100)
+        public async Task<ActionResult<string>> Generate(string prompt, int descLength = 100)
         {
             if(prompt == null)
             {
@@ -37,7 +37,7 @@ namespace SharpCode.OpenAiModule.Web.Controllers.Api
 
             try
             {
-                return await _aiService.GenerateDescription(model.ToLowercaseString(), prompt, descLength);
+                return await _aiService.GenerateDescription(prompt, descLength);
             }
             catch (Exception ex)
             {
@@ -50,7 +50,7 @@ namespace SharpCode.OpenAiModule.Web.Controllers.Api
         [HttpGet]
         [Route("translate")]
         [Authorize(ModuleConstants.Security.Permissions.Access)]
-        public async Task<ActionResult<string>> Translate(string text, string language, OpenAiTextModels model = OpenAiTextModels.Gpt_3__5_Turbo_1106)
+        public async Task<ActionResult<string>> Translate(string text, string language)
         {
             if (text == null)
             {
@@ -59,7 +59,7 @@ namespace SharpCode.OpenAiModule.Web.Controllers.Api
 
             try
             {
-                return await _aiService.TranslateDescription(model.ToLowercaseString(), text, language);
+                return await _aiService.TranslateDescription(text, language);
             }
             catch(Exception ex)
             {
@@ -72,7 +72,7 @@ namespace SharpCode.OpenAiModule.Web.Controllers.Api
         [HttpGet]
         [Route("rephrase")]
         [Authorize(ModuleConstants.Security.Permissions.Access)]
-        public async Task<ActionResult<string>> Rephrase(string text, OpenAiTextModels model = OpenAiTextModels.Gpt_3__5_Turbo_1106)
+        public async Task<ActionResult<string>> Rephrase(string text)
         {
             if (text == null)
             {
@@ -81,7 +81,7 @@ namespace SharpCode.OpenAiModule.Web.Controllers.Api
 
             try
             {
-                return await _aiService.RephraseDescription(model.ToLowercaseString(), text);
+                return await _aiService.RephraseDescription(text);
             }
             catch (Exception ex)
             {

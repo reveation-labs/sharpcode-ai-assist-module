@@ -9,11 +9,6 @@ namespace SharpCode.OpenAiModule.Core.Utilities
 {
     public static class OpenAiModelExtension
     {
-        public static string ToLowercaseString(this OpenAiTextModels model)
-        {
-            return model.ToString().ToLower().Replace("__", ".").Replace("_", "-");
-        }
-
         public static string ToLowercaseString(this OpenAiImageModels.Models model)
         {
             return model.ToString().ToLower().Replace("__", ".").Replace("_", "-");

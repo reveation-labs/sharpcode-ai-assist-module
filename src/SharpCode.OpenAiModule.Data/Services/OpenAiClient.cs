@@ -31,11 +31,12 @@ namespace SharpCode.OpenAiModule.Data.Services
             _openAiService = new OpenAIService(new OpenAiOptions()
             {
                 ApiKey = _openAiOptions.ApiKey,
+                DefaultModelId = _openAiOptions.DefaultModelId,
             });
             _logger = logger;
         }
 
-        public async Task<string> UseOpenAiClient(string model, string systemMessage, string userMessage, int maxTokens = 2000)
+        public async Task<string> UseOpenAiClient(string systemMessage, string userMessage, int maxTokens = 2000)
         {
             var stopwatch = Stopwatch.StartNew();
             var completionResult = await _openAiService.ChatCompletion.CreateCompletion(new ChatCompletionCreateRequest
@@ -45,8 +46,6 @@ namespace SharpCode.OpenAiModule.Data.Services
                     ChatMessage.FromSystem(systemMessage),
                     ChatMessage.FromUser(userMessage),
                 },
-
-                Model = model,
             });
             stopwatch.Stop();
 
