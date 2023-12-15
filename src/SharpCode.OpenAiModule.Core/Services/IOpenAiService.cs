@@ -9,7 +9,7 @@ namespace SharpCode.OpenAiModule.Core.Services
 {
     public interface IOpenAiService
     {
-        public Task<string> GenerateDescription(string productId, string prompt, int descLength);
+        public Task<string> GenerateDescription(string productId, string language, string prompt, int descLength);
 
         public Task<string> TranslateDescription(string text, string language);
 

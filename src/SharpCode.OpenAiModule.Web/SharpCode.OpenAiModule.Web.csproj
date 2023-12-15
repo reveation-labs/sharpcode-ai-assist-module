@@ -11,4 +11,7 @@
     <ProjectReference Include="..\SharpCode.OpenAiModule.Core\SharpCode.OpenAiModule.Core.csproj" />
     <ProjectReference Include="..\SharpCode.OpenAiModule.Data\SharpCode.OpenAiModule.Data.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scripts\widgets\" />
+  </ItemGroup>
 </Project>

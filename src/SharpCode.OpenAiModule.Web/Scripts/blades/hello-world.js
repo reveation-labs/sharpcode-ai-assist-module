@@ -1,11 +1,11 @@
-angular.module('AIModule')
-    .controller('AIModule.helloWorldController', ['$scope', 'AIModule.webApi', function ($scope, api) {
+angular.module('OpenAiModule')
+    .controller('OpenAiModule.helloWorldController', ['$scope', 'OpenAiModule.webApi', function ($scope, api) {
         var blade = $scope.blade;
-        blade.title = 'AIModule';
+        blade.title = 'OpenAiModule';
 
         blade.refresh = function () {
             api.get(function (data) {
-                blade.title = 'AIModule.blades.hello-world.title';
+                blade.title = 'OpenAiModule.blades.hello-world.title';
                 blade.data = data.result;
                 blade.isLoading = false;
             });

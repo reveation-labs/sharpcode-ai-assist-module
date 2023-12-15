@@ -28,7 +28,7 @@ namespace SharpCode.OpenAiModule.Web.Controllers.Api
         [HttpGet]
         [Route("generate")]
         [Authorize(ModuleConstants.Security.Permissions.Access)]
-        public async Task<ActionResult<string>> Generate(string productId, string prompt, int descLength = 100)
+        public async Task<ActionResult<string>> Generate(string productId, string language, string prompt, int descLength = 100)
         {
             if(prompt == null)
             {
@@ -37,7 +37,7 @@ namespace SharpCode.OpenAiModule.Web.Controllers.Api
 
             try
             {
-                return await _aiService.GenerateDescription(productId, prompt, descLength);
+                return await _aiService.GenerateDescription(productId, language, prompt, descLength);
             }
             catch (Exception ex)
             {

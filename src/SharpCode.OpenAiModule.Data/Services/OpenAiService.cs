@@ -27,16 +27,21 @@ namespace SharpCode.OpenAiModule.Data.Services
             _itemService = itemService;
         }
 
-        public async Task<string> GenerateDescription(string productId, string prompt, int descLength)
+        public async Task<string> GenerateDescription(string productId, string language, string prompt, int descLength)
         {
-            if(productId != null)
+            var systemMessage = $"You are expert at creating detailed and straightforward product descriptions for e-commerce websites. Aim for a tone that emphasizes features and benefits while maintaining a professional and informative style. Prioritize clarity and conciseness in your descriptions. Make sure you write it in {descLength} words.";
+            if (productId != null)
             {
                 var product = await _itemService.GetByIdAsync(productId);
                 var properties = string.Join("; ", product.Properties.Select(p => $"{p.Name}: {string.Join(",", p.Values)}"));
                 prompt += "These are the product properties, add the properties which you find relevant. Make sure to remove any product id or sku or anything related to these." + properties;
             }
 
-            var systemMessage = $"You are expert at creating detailed and straightforward product descriptions for e-commerce websites. Aim for a tone that emphasizes features and benefits while maintaining a professional and informative style. Prioritize clarity and conciseness in your descriptions. Make sure you write it in {descLength} words.";
+            if(!string.IsNullOrEmpty(language))
+            {
+                systemMessage += $"Make sure you generate the product description in {language} language";
+            }
+            
             return await _openAiClient.UseOpenAiClient(systemMessage, prompt);
         }
 
@@ -48,7 +53,7 @@ namespace SharpCode.OpenAiModule.Data.Services
 
         public async Task<string> RephraseDescription(string text, string tone)
         {
-            var systemMessage = $"You are expert in rephrasing content in {tone} tone. Help in rephrasing the following text.";
+            var systemMessage = $"You are expert in rephrasing content in {tone} tone. Help in rephrasing the following text. Also make sure you generate the output in the same language as the product description.";
             return await _openAiClient.UseOpenAiClient(systemMessage, text);
         }
 
