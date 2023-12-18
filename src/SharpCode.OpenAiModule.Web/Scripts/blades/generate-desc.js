@@ -1,44 +1,54 @@
 angular.module('OpenAiModule')
-    .controller('OpenAiModule.generateDescController', ['$scope', 'openAiService', 'platformWebApp.toolbarService',
-        function ($scope, openAiService, toolbarService) {
-            $scope.prompt = ""
-            $scope.language = "en-US"
-            $scope.tone = "SEO-friendly"
-            $scope.length = 100
-            
+    .controller('OpenAiModule.generateDescController', ['$scope', 'openAiService', 'platformWebApp.toolbarService', 'platformWebApp.settings', '$timeout',
+        function ($scope, openAiService, toolbarService, settings ) {
+
             var blade = $scope.blade;
+            var currentEntity = blade.currentEntity;
             blade.isLoading = false;
 
-            $scope.lang = blade.parentBlade.catalog.languages;
+            currentEntity.language = blade.parentBlade.currentEntity.languageCode
+            currentEntity.length = 100
+            currentEntity.reviewType = blade.parentBlade.currentEntity.reviewType
+            currentEntity.includeProductProperties = false
+            $scope.languages = blade.parentBlade.languages;
 
-            $scope.changePrompt = function (newPrompt) {
-                $scope.prompt = newPrompt;
-            }
-            $scope.changeLanguage = function (language) {
-                $scope.language = language;   
-            }
-
-            $scope.changeTone = function (tone) {
-                $scope.tone = tone;
-            }
-
-            $scope.changeLength = function (length) {
-                $scope.length = length;
-            }
+            settings.getValues({ id: 'Catalog.EditorialReviewTypes' }, function (data) {
+                $scope.reviewTypes = data;
+                if (!blade.currentEntity.reviewType) {
+                    blade.currentEntity.reviewType = $scope.types[0];
+                }
+            });
 
             $scope.generate = function () {
                 blade.isLoading = true;
-                openAiService.generateDescription($scope.prompt, $scope.language, "").then(
+
+                var generateRequest = {
+                    "prompt": currentEntity.prompt,
+                    "language": currentEntity.language,
+                    "productId": currentEntity.includeProductProperties ? blade.parentBlade.currentEntity.ProductId : "",
+                    "descriptionType": currentEntity.reviewType,
+                    "descriptionLength": currentEntity.length
+                }
+
+                openAiService.generateDescription(generateRequest).then(
                     function (result) {
                         blade.isLoading = false;
                         $scope.result = result.data;
+                        console.log(blade)
+                        blade.parentBlade.currentEntity.content = result.data
+
+                        console.log(blade)
                     })
-               
+
             };
 
             $scope.translate = function () {
                 blade.isLoading = true;
-                openAiService.translateDescription($scope.prompt, $scope.language).then(
+                var translateRequest = {
+                    "language": currentEntity.language,
+                    "productId": blade.parentBlade.item.id
+                }
+                openAiService.translateDescription(translateRequest).then(
                     function (result) {
                         blade.isLoading = false;
                         $scope.result = result.data;
@@ -48,7 +58,10 @@ angular.module('OpenAiModule')
 
             $scope.rephrase = function () {
                 blade.isLoading = true;
-                openAiService.rephraseDescription($scope.prompt, $scope.tone).then(
+                var rephraseRequest = {
+                    "Prompt": currentEntity.prompt,
+                }
+                openAiService.rephraseDescription(rephraseRequest).then(
                     function (result) {
                         blade.isLoading = false;
                         $scope.result = result.data;
@@ -68,33 +81,7 @@ angular.module('OpenAiModule')
                         return true;
                     }
 
-                },
-                {
-                    name: 'Translate',
-                    icon: 'fa fa-globe',
-                    index: 10,
-                    executeMethod: function (blade) {
-                        $scope.translate();
-                    },
-
-                    canExecuteMethod: function (blade) {
-                        return true;
-                    }
-
-                },
-                {
-                    name: 'Rephrase',
-                    icon: 'fa fa-paragraph',
-                    index: 10,
-                    executeMethod: function (blade) {
-                        $scope.rephrase();
-                    },
-
-                    canExecuteMethod: function (blade) {
-                        return true;
-                    }
-
-                }
+                },                
             ];
             
         }]);

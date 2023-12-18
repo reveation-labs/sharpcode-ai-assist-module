@@ -25,19 +25,19 @@ namespace SharpCode.OpenAiModule.Web.Controllers.Api
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("generate")]
         [Authorize(ModuleConstants.Security.Permissions.Access)]
-        public async Task<ActionResult<string>> Generate(string productId, string language, string prompt, int descLength = 100)
+        public async Task<ActionResult<string>> Generate([FromBody] OpenAiTextRequest openAiTextRequest)
         {
-            if(prompt == null)
+            if(string.IsNullOrEmpty(openAiTextRequest.Prompt) || string.IsNullOrEmpty(openAiTextRequest.DescriptionType))
             {
                 return BadRequest();
             }
 
             try
             {
-                return await _aiService.GenerateDescription(productId, language, prompt, descLength);
+                return await _aiService.GenerateDescription(openAiTextRequest);
             }
             catch (Exception ex)
             {
@@ -47,19 +47,19 @@ namespace SharpCode.OpenAiModule.Web.Controllers.Api
 
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("translate")]
         [Authorize(ModuleConstants.Security.Permissions.Access)]
-        public async Task<ActionResult<string>> Translate(string text, string language)
+        public async Task<ActionResult<string>> Translate([FromBody] OpenAiTextRequest openAiTextRequest)
         {
-            if (text == null)
+            if (string.IsNullOrEmpty(openAiTextRequest.Language))
             {
                 return BadRequest();
             }
 
             try
             {
-                return await _aiService.TranslateDescription(text, language);
+                return await _aiService.TranslateDescription(openAiTextRequest);
             }
             catch(Exception ex)
             {
@@ -69,19 +69,19 @@ namespace SharpCode.OpenAiModule.Web.Controllers.Api
 
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("rephrase")]
         [Authorize(ModuleConstants.Security.Permissions.Access)]
-        public async Task<ActionResult<string>> Rephrase(string text, string tone = "SEO friendly")
+        public async Task<ActionResult<string>> Rephrase([FromBody] OpenAiTextRequest openAiTextRequest)
         {
-            if (text == null)
+            if (string.IsNullOrEmpty(openAiTextRequest.Prompt))
             {
                 return BadRequest();
             }
 
             try
             {
-                return await _aiService.RephraseDescription(text, tone);
+                return await _aiService.RephraseDescription(openAiTextRequest);
             }
             catch (Exception ex)
             {
@@ -112,8 +112,7 @@ namespace SharpCode.OpenAiModule.Web.Controllers.Api
                 }
             }
 
-            return BadRequest(validationResult.Errors);
-           
+            return BadRequest(validationResult.Errors);   
         }
     }
 }

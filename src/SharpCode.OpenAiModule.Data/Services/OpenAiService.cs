@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using SharpCode.OpenAiModule.Core.Models;
 using VirtoCommerce.CatalogModule.Core.Services;
 using static OpenIddict.Abstractions.OpenIddictConstants;
+using VirtoCommerce.CatalogModule.Data.Search.Indexing;
 
 namespace SharpCode.OpenAiModule.Data.Services
 {
@@ -27,34 +28,53 @@ namespace SharpCode.OpenAiModule.Data.Services
             _itemService = itemService;
         }
 
-        public async Task<string> GenerateDescription(string productId, string language, string prompt, int descLength)
+        public async Task<string> GenerateDescription(OpenAiTextRequest openAiTextRequest)
         {
-            var systemMessage = $"You are expert at creating detailed and straightforward product descriptions for e-commerce websites. Aim for a tone that emphasizes features and benefits while maintaining a professional and informative style. Prioritize clarity and conciseness in your descriptions. Make sure you write it in {descLength} words.";
-            if (productId != null)
+            var systemMessage = $"You are expert at creating concise and straightforward product descriptions in for e-commerce websites. " +
+                $"You write in a tone that emphasizes features and benefits while maintaining a professional and informative style. " +
+                $"You write key features in short and simple bullet points. " +
+                $"The output format should be **HTML Format**. " +
+                $"Do not add <html> tag or backticks in output.";
+
+            if (!string.IsNullOrEmpty(openAiTextRequest.ProductId))
             {
-                var product = await _itemService.GetByIdAsync(productId);
+                var product = await _itemService.GetByIdAsync(openAiTextRequest.ProductId);
                 var properties = string.Join("; ", product.Properties.Select(p => $"{p.Name}: {string.Join(",", p.Values)}"));
-                prompt += "These are the product properties, add the properties which you find relevant. Make sure to remove any product id or sku or anything related to these." + properties;
+                openAiTextRequest.Prompt += "These are the product properties, add the properties which you find relevant. Make sure to remove any product id or sku or anything related to these." + properties;
             }
 
-            if(!string.IsNullOrEmpty(language))
+            if(!string.IsNullOrEmpty(openAiTextRequest.Language))
             {
-                systemMessage += $"Make sure you generate the product description in {language} language";
+                systemMessage += $"Make sure you generate the product description in {openAiTextRequest.Language} language";
             }
-            
-            return await _openAiClient.UseOpenAiClient(systemMessage, prompt);
+
+            openAiTextRequest.Prompt += $"Make sure you generate approx {openAiTextRequest.DescLength} words. " +
+                $"Generate the description according to {openAiTextRequest.DescriptionType} type.";
+
+            return await _openAiClient.UseOpenAiClient(systemMessage, openAiTextRequest.Prompt);
         }
 
-        public async Task<string> TranslateDescription(string text, string language)
+        public async Task<string> TranslateDescription(OpenAiTextRequest openAiTextRequest)
         {
-            var systemMessage = $"You are expert in {language} langauge. You are a translator. Help in translation.";
-            return await _openAiClient.UseOpenAiClient(systemMessage, text);
+            var systemMessage = $"You are expert in {openAiTextRequest.Language} langauge. You are a translator. " +
+                $"The output format should be **HTML Format**. " +
+                $"Do not add <html> tag or any extra quotes in output.";
+            var product = (await _itemService.GetByIdAsync(openAiTextRequest.ProductId));
+            var defaultLang = product.Catalog.DefaultLanguage.LanguageCode;
+            var textToTranslate = product.Reviews.FirstOrDefault(r => r.LanguageCode == defaultLang).Content;
+
+            openAiTextRequest.Prompt = $"The following is a product description in markdown format, extract the text and convert it to {openAiTextRequest.Language}. Here is the text to translate : {textToTranslate}";
+            return await _openAiClient.UseOpenAiClient(systemMessage, openAiTextRequest.Prompt);
         }
 
-        public async Task<string> RephraseDescription(string text, string tone)
+        public async Task<string> RephraseDescription(OpenAiTextRequest openAiTextRequest)
         {
-            var systemMessage = $"You are expert in rephrasing content in {tone} tone. Help in rephrasing the following text. Also make sure you generate the output in the same language as the product description.";
-            return await _openAiClient.UseOpenAiClient(systemMessage, text);
+            var systemMessage = $"You are expert in rephrasing content in SEO-Friendly tone. " +
+                $"Help in rephrasing.The input is in html markdown format, extract the text and then rephrase it." +
+                $"Also make sure you generate the output in the same language as the product description. " +
+                $"The output format should be **HTML Format**. " +
+                $"Do not add <html> tag or any extra quotes in output.";
+            return await _openAiClient.UseOpenAiClient(systemMessage, openAiTextRequest.Prompt);
         }
 
         public async Task<string> GenerateImage(GenerateImageRequest generateImageRequest)

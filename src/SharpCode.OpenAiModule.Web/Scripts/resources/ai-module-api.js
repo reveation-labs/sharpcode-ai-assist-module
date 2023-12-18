@@ -1,13 +1,13 @@
 angular.module('OpenAiModule').service('openAiService', ['$http', function ($http, $localStorage) {
     return {
-        generateDescription: function (prompt, language, productId) {
-            return $http.get('api/openai/generate?prompt=' + prompt + '&language=' + language + '&productId=' + productId);
+        generateDescription: function (generateRequest) {
+            return $http.post('api/openai/generate', generateRequest);
         },
-        translateDescription: function (text, language) {
-            return $http.get('api/openai/translate?text=' + text + '&language=' + language);
+        translateDescription: function (translateRequest) {
+            return $http.post('api/openai/translate', translateRequest);
         },
-        rephraseDescription: function (text, tone) {
-            return $http.get('api/openai/rephrase?text=' + text + '&tone=' + tone);
+        rephraseDescription: function (rephraseRequest) {
+            return $http.post('api/openai/rephrase', rephraseRequest);
         }
     }
 }]);

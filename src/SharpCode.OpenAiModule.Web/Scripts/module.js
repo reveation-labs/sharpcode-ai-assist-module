@@ -27,13 +27,18 @@ angular.module(moduleName, [])
                 });
         }
     ])
-    .run(['platformWebApp.mainMenuService', '$state', 'platformWebApp.toolbarService', 'platformWebApp.widgetService', 'platformWebApp.bladeNavigationService',
-        function (mainMenuService, $state, toolbarService, widgetService, bladeNavigationService) {
+    .run(['platformWebApp.mainMenuService', '$state', 'platformWebApp.toolbarService', 'platformWebApp.widgetService', 'platformWebApp.bladeNavigationService', 'openAiService',
+        function (mainMenuService, $state, toolbarService, widgetService, bladeNavigationService, openAiService) {
             //Register module in main menu
-            var bladesOpenAi = {
-                name: 'AI Tools',
-                icon: 'fa fa-lightbulb-o',
+            var generateBlade = {
+                
+                name: 'Generate',
+                icon: 'fa fa-plus',
                 index: 10,
+                canExecuteMethod: function (blade) {
+                    return true;
+                },
+
                 executeMethod: function (blade) {
                     var newBlade = {
                         id: 'generateDescBlade',
@@ -43,13 +48,59 @@ angular.module(moduleName, [])
                     };
                     bladeNavigationService.showBlade(newBlade, blade);
                 },
+            };
+            toolbarService.register(generateBlade, 'virtoCommerce.catalogModule.editorialReviewDetailController');
 
+            var rephraseBlade = {
+
+                name: 'Rephrase',
+                icon: 'fa fa-paragraph',
+                index: 10,
                 canExecuteMethod: function (blade) {
                     return true;
+                },
+
+                executeMethod: function (blade) {
+                    blade.isLoading = true;
+                    var rephraseRequest = {
+                        "Prompt": blade.currentEntity.content,
+                    }
+                    openAiService.rephraseDescription(rephraseRequest).then(
+                        function (result) {
+                            blade.isLoading = false;
+                            $scope.result = result.data;
+                        })
                 }
-                
             };
-            toolbarService.register(bladesOpenAi, 'virtoCommerce.catalogModule.editorialReviewsListController');
+            toolbarService.register(rephraseBlade, 'virtoCommerce.catalogModule.editorialReviewDetailController');
+
+            var translateBlade = {
+
+                name: 'Translate',
+                icon: 'fa fa-globe',
+                index: 10,
+                canExecuteMethod: function (blade) {
+                    return true;
+                },
+                executeMethod: function (blade) {
+                    blade.isLoading = true;
+                    var translateRequest = {
+                        "language": blade.currentEntity.languageCode,
+                        "productId": blade.parentBlade.item.id
+                    }
+                    openAiService.translateDescription(translateRequest).then(
+                        function (result) {
+                            blade.isLoading = false;
+                            blade.origEntity.content = result.data;            
+                            blade.currentEntity.content = result.data
+                            blade.scope.setForm(blade.currentEntity)
+                            console.log(blade)
+                        })
+                },
+                parentRefresh: function (data) { $scope.formScope.content = blade.currentEntity.content; },
+
+            };
+            toolbarService.register(translateBlade, 'virtoCommerce.catalogModule.editorialReviewDetailController');
         }
     ]);
 
