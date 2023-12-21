@@ -14,21 +14,12 @@ angular.module(moduleName, [])
                     templateUrl: '$(Platform)/Scripts/common/templates/home.tpl.html',
                     controller: [
                         'platformWebApp.bladeNavigationService',
-                        function (bladeNavigationService) {
-                            var newBlade = {
-                                id: 'blade1',
-                                controller: 'OpenAiModule.helloWorldController',
-                                template: 'Modules/$(SharpCode.OpenAiModule)/Scripts/blades/hello-world.html',
-                                isClosingDisabled: true,
-                            };
-                            bladeNavigationService.showBlade(newBlade);
-                        }
                     ]
                 });
         }
     ])
-    .run(['platformWebApp.mainMenuService', '$state', 'platformWebApp.toolbarService', 'platformWebApp.widgetService', 'platformWebApp.bladeNavigationService', 'openAiService',
-        function (mainMenuService, $state, toolbarService, widgetService, bladeNavigationService, openAiService) {
+    .run(['platformWebApp.mainMenuService', '$state', 'platformWebApp.toolbarService', 'platformWebApp.widgetService', 'platformWebApp.bladeNavigationService', 'openAiService', '$timeout',
+        function (mainMenuService, $state, toolbarService, widgetService, bladeNavigationService, openAiService, $timeout) {
             //Register module in main menu
             var generateBlade = {
                 
@@ -61,14 +52,18 @@ angular.module(moduleName, [])
                 },
 
                 executeMethod: function (blade) {
+                    console.log(blade)
                     blade.isLoading = true;
                     var rephraseRequest = {
                         "Prompt": blade.currentEntity.content,
                     }
                     openAiService.rephraseDescription(rephraseRequest).then(
                         function (result) {
-                            blade.isLoading = false;
-                            $scope.result = result.data;
+                            $timeout(function () {
+                                blade.$scope.$broadcast('resetContent', { body: result.data });
+                                blade.isLoading = false;
+                            });
+                            
                         })
                 }
             };
@@ -83,24 +78,52 @@ angular.module(moduleName, [])
                     return true;
                 },
                 executeMethod: function (blade) {
+                    console.log(blade)
                     blade.isLoading = true;
+
                     var translateRequest = {
-                        "language": blade.currentEntity.languageCode,
-                        "productId": blade.parentBlade.item.id
+                        "Prompt": blade.currentEntity.content,
+                        "Language": blade.currentEntity.languageCode,
+                        "ProductId" : ""
                     }
+
+                    if (!translateRequest.Prompt || translateRequest.Prompt == "") {
+                        translateRequest.ProductId = blade.item.id;
+                    }
+
                     openAiService.translateDescription(translateRequest).then(
                         function (result) {
-                            blade.isLoading = false;
-                            blade.origEntity.content = result.data;            
-                            blade.currentEntity.content = result.data
-                            blade.scope.setForm(blade.currentEntity)
-                            console.log(blade)
+                            $timeout(function () {
+                                blade.$scope.$broadcast('resetContent', { body: result.data });
+                                blade.isLoading = false;
+                            });
+
                         })
-                },
-                parentRefresh: function (data) { $scope.formScope.content = blade.currentEntity.content; },
+                }
 
             };
             toolbarService.register(translateBlade, 'virtoCommerce.catalogModule.editorialReviewDetailController');
+
+            var generateImageBlade = {
+
+                name: 'Generate',
+                icon: 'fa fa-magic',
+                index: 10,
+                canExecuteMethod: function (blade) {
+                    return true;
+                },
+
+                executeMethod: function (blade) {
+                    
+                    var newBlade = {
+                        id: 'generateImageBlade',
+                        controller: 'OpenAiModule.generateImageController',
+                        template: 'Modules/$(SharpCode.OpenAiModule)/Scripts/blades/generate-image.tpl.html'
+                    };
+                    bladeNavigationService.showBlade(newBlade, blade);
+                },
+            };
+            toolbarService.register(generateImageBlade, 'virtoCommerce.catalogModule.imagesAddController');
         }
     ]);
 

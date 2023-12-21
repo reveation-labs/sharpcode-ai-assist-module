@@ -15,7 +15,7 @@ namespace SharpCode.OpenAiModule.Core.Services
 
         public Task<string> RephraseDescription(OpenAiTextRequest openAiTextRequest);
 
-        public Task<string> GenerateImage(GenerateImageRequest generateImageRequest);
+        public Task<List<string>> GenerateImage(OpenAiImageRequest generateImageRequest);
 
     }
 }

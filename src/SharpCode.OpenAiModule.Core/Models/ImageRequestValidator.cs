@@ -9,7 +9,7 @@ using SharpCode.OpenAiModule.Core.Enums;
 
 namespace SharpCode.OpenAiModule.Core.Models
 {
-    public class ImageRequestValidator : AbstractValidator<GenerateImageRequest>
+    public class ImageRequestValidator : AbstractValidator<OpenAiImageRequest>
     {
         public ImageRequestValidator()
         {

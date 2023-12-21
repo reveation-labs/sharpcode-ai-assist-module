@@ -1,6 +1,6 @@
 angular.module('OpenAiModule')
     .controller('OpenAiModule.generateDescController', ['$scope', 'openAiService', 'platformWebApp.toolbarService', 'platformWebApp.settings', '$timeout',
-        function ($scope, openAiService, toolbarService, settings ) {
+        function ($scope, openAiService, toolbarService, settings, $timeout ) {
 
             var blade = $scope.blade;
             var currentEntity = blade.currentEntity;
@@ -9,9 +9,7 @@ angular.module('OpenAiModule')
             currentEntity.language = blade.parentBlade.currentEntity.languageCode
             currentEntity.length = 100
             currentEntity.reviewType = blade.parentBlade.currentEntity.reviewType
-            currentEntity.includeProductProperties = false
             $scope.languages = blade.parentBlade.languages;
-
             settings.getValues({ id: 'Catalog.EditorialReviewTypes' }, function (data) {
                 $scope.reviewTypes = data;
                 if (!blade.currentEntity.reviewType) {
@@ -25,7 +23,7 @@ angular.module('OpenAiModule')
                 var generateRequest = {
                     "prompt": currentEntity.prompt,
                     "language": currentEntity.language,
-                    "productId": currentEntity.includeProductProperties ? blade.parentBlade.currentEntity.ProductId : "",
+                    "productId": currentEntity.useProductPropFlag ? blade.parentBlade.item.id : "",
                     "descriptionType": currentEntity.reviewType,
                     "descriptionLength": currentEntity.length
                 }
@@ -34,39 +32,16 @@ angular.module('OpenAiModule')
                     function (result) {
                         blade.isLoading = false;
                         $scope.result = result.data;
-                        console.log(blade)
-                        blade.parentBlade.currentEntity.content = result.data
+                        $timeout(function () {
+                            blade.parentBlade.$scope.$broadcast('resetContent', { body: result.data });
+                            blade.isLoading = false;
+                        });
 
                         console.log(blade)
                     })
 
             };
 
-            $scope.translate = function () {
-                blade.isLoading = true;
-                var translateRequest = {
-                    "language": currentEntity.language,
-                    "productId": blade.parentBlade.item.id
-                }
-                openAiService.translateDescription(translateRequest).then(
-                    function (result) {
-                        blade.isLoading = false;
-                        $scope.result = result.data;
-                    })
-
-            };
-
-            $scope.rephrase = function () {
-                blade.isLoading = true;
-                var rephraseRequest = {
-                    "Prompt": currentEntity.prompt,
-                }
-                openAiService.rephraseDescription(rephraseRequest).then(
-                    function (result) {
-                        blade.isLoading = false;
-                        $scope.result = result.data;
-                    })
-            };
 
             blade.toolbarCommands = [
                 {

@@ -1,0 +1,77 @@
+<div class="blade-static __bottom" ng-include="'Modules/$(VirtoCommerce.Catalog)/Scripts/blades/common/templates/ok-cancel.tpl.html'"></div>
+
+<div class="blade-content">
+  <div class="blade-inner">
+    <form class="form" name="GenerateImageForm">
+      <div class="form-group">
+        <label class="form-label">Prompt</label>
+        <div class="form-input">
+          <textarea required="" cols="30" rows="5"
+                    ng-model="blade.currentEntity.prompt" placeholder="Enter your prompt"></textarea>
+        </div>
+      </div>
+      <!-- Dropdown for Models -->
+      <div class="form-group">
+        <label class="form-label">Model</label>
+        <div class="form-input">
+          <select ng-model="blade.currentEntity.selectedModel" ng-options="model for model in models" ng-change="updateDropdownOptions()">
+            <option value="">Select Model</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Dropdown for Quality -->
+      <div class="form-group">
+        <label class="form-label">Quality</label>
+        <div class="form-input">
+          <select ng-model="blade.currentEntity.selectedQuality" ng-options="quality for quality in qualities">
+            <option value="">Select Quality</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Dropdown for Size -->
+      <div class="form-group">
+        <label class="form-label">Size</label>
+        <div class="form-input">
+          <select ng-model="blade.currentEntity.selectedSize" ng-options="size for size in sizes">
+            <option value="">Select Size</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Add Product Properties in Prompt</label>
+        <div class="form-input">
+          <label class="form-label __switch">
+            <input type="checkbox" ng-model="blade.currentEntity.useProductPropFlag">
+            <span class="switch"></span>
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Number of Images</label>
+        <div class="form-input">
+          <input type="number" class="__xsmall ng-pristine ng-untouched ng-valid ng-valid-required"
+                 ng-model="blade.currentEntity.numOfImages"
+                 min="1" ng-attr-max="{{maxNumOfImages}}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Generated Images</label>
+        <div class="form-input">
+          <div ng-repeat="image in result">
+            <div class="image-container">
+              <img class="result-image" ng-src="data:image/png;base64,{{ image }}" alt="Description of Image">
+              <div class="form-input" ng-click="toggleSelection(image)">
+                <label class="form-label">
+                  <input type="checkbox" ng-model="blade.currentEntity.selectedImages[image]">
+                  <span class="switch"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

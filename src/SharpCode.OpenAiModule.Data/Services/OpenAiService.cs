@@ -59,11 +59,22 @@ namespace SharpCode.OpenAiModule.Data.Services
             var systemMessage = $"You are expert in {openAiTextRequest.Language} langauge. You are a translator. " +
                 $"The output format should be **HTML Format**. " +
                 $"Do not add <html> tag or any extra quotes in output.";
-            var product = (await _itemService.GetByIdAsync(openAiTextRequest.ProductId));
-            var defaultLang = product.Catalog.DefaultLanguage.LanguageCode;
-            var textToTranslate = product.Reviews.FirstOrDefault(r => r.LanguageCode == defaultLang).Content;
+
+            var textToTranslate = string.Empty;
+
+            if (string.IsNullOrEmpty(openAiTextRequest.Prompt))
+            {
+                var product = (await _itemService.GetByIdAsync(openAiTextRequest.ProductId));
+                var defaultLang = product.Catalog.DefaultLanguage.LanguageCode;
+                textToTranslate = product.Reviews.FirstOrDefault(r => r.LanguageCode == defaultLang).Content;
+            }
+            else
+            {
+                textToTranslate = openAiTextRequest.Prompt;
+            }
 
             openAiTextRequest.Prompt = $"The following is a product description in markdown format, extract the text and convert it to {openAiTextRequest.Language}. Here is the text to translate : {textToTranslate}";
+
             return await _openAiClient.UseOpenAiClient(systemMessage, openAiTextRequest.Prompt);
         }
 
@@ -77,8 +88,16 @@ namespace SharpCode.OpenAiModule.Data.Services
             return await _openAiClient.UseOpenAiClient(systemMessage, openAiTextRequest.Prompt);
         }
 
-        public async Task<string> GenerateImage(GenerateImageRequest generateImageRequest)
+        public async Task<List<string>> GenerateImage(OpenAiImageRequest generateImageRequest)
         {
+            generateImageRequest.Prompt += "Generate realistic product images suitable for e-commerce websites based on the provided description.";
+
+            if (!string.IsNullOrEmpty(generateImageRequest.ProductId))
+            {
+                var product = await _itemService.GetByIdAsync(generateImageRequest.ProductId);
+                var properties = string.Join("; ", product.Properties.Select(p => $"{p.Name}: {string.Join(",", p.Values)}"));
+                generateImageRequest.Prompt += "These are the product properties, add the properties which you find relevant. Do not add text to the images" + properties;
+            }
             return await _openAiClient.UseOpenAiImageClient(generateImageRequest);
         }
     }

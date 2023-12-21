@@ -16,6 +16,7 @@ using Newtonsoft.Json;
 using SharpCode.OpenAiModule.Core.Models;
 using SharpCode.OpenAiModule.Core.Utilities;
 using Microsoft.Extensions.Logging;
+using SharpCode.OpenAiModule.Core.Enums;
 
 namespace SharpCode.OpenAiModule.Data.Services
 {
@@ -61,7 +62,7 @@ namespace SharpCode.OpenAiModule.Data.Services
 
         }
 
-        public async Task<string> UseOpenAiImageClient(GenerateImageRequest generateImageRequest)
+        public async Task<List<string>> UseOpenAiImageClient(OpenAiImageRequest generateImageRequest)
         {
             var stopwatch = Stopwatch.StartNew();
             var imageResult = await _openAiService.Image.CreateImage(new ImageCreateRequest
@@ -81,10 +82,17 @@ namespace SharpCode.OpenAiModule.Data.Services
 
             if (imageResult.Successful)
             {
-                return (string.Join("\n", imageResult.Results.Select(r => r.Url)));
+                if (generateImageRequest.ResponseFormat == OpenAiImageModels.ResponseFormat.url)
+                {
+                    return imageResult.Results.Select(r => r.Url).ToList();
+                }
+                else
+                {
+                    return imageResult.Results.Select(r => r.B64).ToList();
+                }  
             }
 
-            return imageResult.Error.Message;
+            return imageResult.Error.Messages;
         }
     }
 }

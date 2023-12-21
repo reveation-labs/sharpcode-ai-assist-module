@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -94,7 +95,7 @@ namespace SharpCode.OpenAiModule.Web.Controllers.Api
         [HttpPost]
         [Route("generate-image")]
         [Authorize(ModuleConstants.Security.Permissions.Access)]
-        public async Task<ActionResult<string>> GenerateImage([FromBody] GenerateImageRequest generateImageRequest)
+        public async Task<ActionResult<List<string>>> GenerateImage([FromBody] OpenAiImageRequest generateImageRequest)
         {
             var validationResult = await new ImageRequestValidator().ValidateAsync(generateImageRequest);
 

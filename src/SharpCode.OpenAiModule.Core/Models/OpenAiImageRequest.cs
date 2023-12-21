@@ -8,9 +8,11 @@ using OI = SharpCode.OpenAiModule.Core.Enums.OpenAiImageModels;
 
 namespace SharpCode.OpenAiModule.Core.Models
 {
-    public class GenerateImageRequest
+    public class OpenAiImageRequest
     {
         public string Prompt { get; set; }
+
+        public string ProductId { get; set; }
 
         public OI.Models Model { get; set; } = OI.Models.Dall_e_3;
 

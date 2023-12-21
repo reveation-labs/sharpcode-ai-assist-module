@@ -8,6 +8,9 @@ angular.module('OpenAiModule').service('openAiService', ['$http', function ($htt
         },
         rephraseDescription: function (rephraseRequest) {
             return $http.post('api/openai/rephrase', rephraseRequest);
+        },
+        generateImage: function (generateImageRequest) {
+            return $http.post('api/openai/generate-image', generateImageRequest);
         }
     }
 }]);
