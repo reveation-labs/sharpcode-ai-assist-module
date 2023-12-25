@@ -1,0 +1,58 @@
+<div class="blade-static __bottom" ng-include="'Modules/$(VirtoCommerce.Catalog)/Scripts/blades/common/templates/ok-cancel.tpl.html'"></div>
+  <div class="blade-content">
+    <div class="blade-inner">
+      <form class="form" name="GenerateDescriptionForm">
+        <div class="form-group">
+          <label class="form-label">Prompt</label>
+          <div class="form-input">
+            <textarea required="" ng-model="blade.currentEntity.prompt" placeholder="Enter your prompt"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">{{ 'catalog.blades.editorialReview-detail.labels.type' | translate }} <a href="" ng-click="openDictionarySettingManagement()" class="form-edit" va-permission="platform:setting:update"><i class="form-ico fa fa-pencil"></i></a></label>
+          <div class="form-input">
+            <ui-select ng-model="blade.currentEntity.reviewType" ng-disabled="disabled">
+              <ui-select-match placeholder="{{'catalog.blades.editorialReview-detail.placeholders.type' | translate}}">{{$select.selected}}</ui-select-match>
+              <ui-select-choices repeat="x in reviewTypes | filter: $select.search">
+                <span ng-bind-html="x | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">{{ 'catalog.blades.editorialReview-detail.labels.language' | translate }}</label>
+          <div class="form-input">
+            <ui-select ng-model="blade.currentEntity.languageCode" ng-disabled="disabled">
+              <ui-select-match allow-clear="true" placeholder="{{'catalog.blades.editorialReview-detail.placeholders.language' | translate}}">{{$select.selected.languageCode}}</ui-select-match>
+              <ui-select-choices repeat="lang.languageCode as lang in languages | filter: {languageCode: $select.search}">
+                <span ng-bind-html="lang.languageCode | highlight: $select.search"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Desired Length</label>
+          <div class="form-input">
+            <input type="number" class="__xsmall ng-pristine ng-untouched ng-valid ng-valid-required"
+                   ng-model="blade.currentEntity.length" placeholder="Enter the desired length (Defaults to 100)"
+                   min="30" max="300">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Add Product Properties in Prompt</label>
+          <div class="form-input">
+            <label class="form-label __switch">
+              <input type="checkbox" ng-model="blade.currentEntity.useProductPropFlag">
+              <span class="switch"></span>
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Result</label>
+          <div class="form-input">
+            <textarea id="result" ng-model="result" readonly></textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>

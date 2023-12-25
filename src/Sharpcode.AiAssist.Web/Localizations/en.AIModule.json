@@ -1,0 +1,18 @@
+{
+  
+  "permissions": {
+    "AiAssistModule:access": "AiAssistModule menu",
+    "AiAssistModule:create": "Create AiAssistModule related data",
+    "AiAssistModule:read": "View AiAssistModule related data",
+    "AiAssistModule:update": "Update AiAssistModule related data",
+    "AiAssistModule:delete": "Delete AiAssistModule related data"
+  },
+  "settings": {
+    "AiAssistModule": {
+      "OpenAiTextModel": {
+        "title": "AiAssistModule OpenAiTextModel",
+        "description": "OpenAiTextModel setting"
+      }
+    }
+  }
+}

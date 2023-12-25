@@ -1,0 +1,30 @@
+<style>
+
+  /* Ensure the textarea takes up all the available space */
+  #result {
+    width: 100%;
+    height: 100%; /* This will make it take up the full height of its parent */
+    resize: vertical; /* This allows vertical resizing */
+    box-sizing: border-box; /* This includes padding and border in the element's total width and height */
+  }
+</style>
+
+<div class="blade-static __bottom" ng-include="'Modules/$(VirtoCommerce.Catalog)/Scripts/blades/common/templates/ok-cancel.tpl.html'"></div>
+<div class="blade-content">
+  <div class="blade-inner">
+    <form class="form" name="RephraseDescriptionForm">
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <div class="form-input" >
+          <textarea style="height:180px" required="" ng-model="blade.currentEntity.content"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Result</label>
+        <div class="form-input">
+          <textarea style="height:180px" id="result" ng-model="result" readonly></textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

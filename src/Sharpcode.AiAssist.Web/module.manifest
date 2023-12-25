@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+  <id>Sharpcode.AiAssistModule</id>
+  <version>3.200.0</version>
+  <version-tag></version-tag>
+
+  <platformVersion>3.253.1</platformVersion>
+  <dependencies>
+    <!--<dependency id="VirtoCommerce.Core" version="3.211.0" />-->
+  </dependencies>
+
+  <title>AI Assist Module for Virto Commerce</title>
+  <description>AI Assist Module for Virto Commerce</description>
+
+  <authors>
+    <author>Sharpcode</author>
+  </authors>
+  <owners>
+    <owner>Sharpcode</owner>
+  </owners>
+
+  <projectUrl>https://github.com/reveation-labs/virto-openai-module</projectUrl>
+  <iconUrl>Modules/$(Sharpcode.AiAssistModule)/Content/logo.png</iconUrl>
+  <requireLicenseAcceptance>false</requireLicenseAcceptance>
+
+  <assemblyFile>Sharpcode.AiAssistModule.Web.dll</assemblyFile>
+  <moduleType>Sharpcode.AiAssistModule.Web.Module, Sharpcode.AiAssistModule.Web</moduleType>
+
+  <releaseNotes>First version.</releaseNotes>
+  <copyright>Copyright © 2023 SC. All rights reserved</copyright>
+  <useFullTypeNameInSwagger>false</useFullTypeNameInSwagger>
+</module>
