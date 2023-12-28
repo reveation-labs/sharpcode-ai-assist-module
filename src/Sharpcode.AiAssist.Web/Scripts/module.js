@@ -64,10 +64,11 @@ angular.module(moduleName, [])
                 icon: 'fa fa-globe',
                 index: 10,
                 canExecuteMethod: function (blade) {
-                    blade.$scope.$watch('blade.item.reviews', function (newVal, oldVal) {
-                        return newVal.length != oldVal.length && blade.$scope.gridApi && blade.$scope.gridApi.selection.getSelectedCount() == 1;
-                    });
-                    return blade.$scope.gridApi && blade.$scope.gridApi.selection.getSelectedCount() == 1;
+                    if (!blade.$scope.gridApi) {
+                        return false;
+                    }
+                    var selectedItemsLength = blade.$scope.gridApi.selection.getSelectedRows().length;
+                    return selectedItemsLength == 1;
                 },
                 executeMethod: function (blade) {
                     var selectedItems = blade.$scope.gridApi.selection.getSelectedRows();

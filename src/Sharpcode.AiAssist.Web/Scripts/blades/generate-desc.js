@@ -35,11 +35,16 @@ angular.module('AiAssistModule')
                 openAiService.generateDescription(generateRequest).then(
                     function (result) {
                         blade.isLoading = false;
-                        $scope.result = result.data;
-
-                        if ($scope.result) {
-                            $scope.isValid = true;
-                        }       
+                        if (result.data) {
+                            $scope.isValid = true
+                        }
+                        $timeout(function () {
+                            var cleanedContent = result.data.replace(/html/g, '').replace(/```/g, '');
+                            $scope.result = cleanedContent
+                            $scope.$broadcast('resetContent', { body: $scope.result });
+                            blade.isLoading = false;
+                        });                       
+  
                     })
 
             };

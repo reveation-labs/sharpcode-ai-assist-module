@@ -10,21 +10,55 @@
 </style>
 
 <div class="blade-static __bottom" ng-include="'Modules/$(VirtoCommerce.Catalog)/Scripts/blades/common/templates/ok-cancel.tpl.html'"></div>
-<div class="blade-content">
+<div class="blade-content __large-wide">
   <div class="blade-inner">
     <form class="form" name="RephraseDescriptionForm">
       <div class="form-group">
         <label class="form-label">Description</label>
         <div class="form-input" >
-          <textarea style="height:180px" required="" ng-model="blade.currentEntity.content"></textarea>
+          <textarea data-uk-htmleditor="{mode:'tab'}" required="" ng-model="blade.currentEntity.content"></textarea>
         </div>
       </div>
       <div class="form-group">
         <label class="form-label">Result</label>
         <div class="form-input">
-          <textarea style="height:180px" id="result" ng-model="result" readonly></textarea>
+          <textarea vc-uk-htmleditor="{mode:'tab'}" id="result" ng-model="result" readonly></textarea>
         </div>
       </div>
     </form>
   </div>
 </div>
+
+<style>
+  .uk-htmleditor-toolbar {
+    display: none !important;
+  }
+
+  .uk-htmleditor-preview {
+    height: 200px !important;
+  }
+
+  .uk-htmleditor-code {
+    height: 200px !important;
+  }
+
+  .CodeMirror-vscrollbar {
+    overflow: hidden;
+    div {
+        height: 0px;
+        width: 0px;
+        }
+   }
+
+  .uk-htmleditor-code,
+  .uk-htmleditor-preview {
+    overflow-y: auto; /* Ensure that the overflow property is set */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: darkgrey; /* For Firefox */
+  }
+
+  .uk-htmleditor-code::-webkit-scrollbar,
+  .uk-htmleditor-preview::-webkit-scrollbar {
+    width: 8px;
+  }
+</style>

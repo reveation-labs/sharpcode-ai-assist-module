@@ -1,0 +1,32 @@
+name: Build Module
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "6.0.x"
+
+      - name: Install VC Build
+        run: |
+          dotnet tool install -g VirtoCommerce.GlobalTool
+
+      - name: VC Build Compress
+        run: |
+          vc-build compress
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        with:
+          asset_path: ./artifacts/Sharpcode.AiAssistModule_3.200.0.zip
+          asset_name: Sharpcode.AiAssistModule_3.200.0.zip
+          asset_content_type: application/zip

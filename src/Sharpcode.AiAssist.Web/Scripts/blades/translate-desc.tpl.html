@@ -1,11 +1,11 @@
 <div class="blade-static __bottom" ng-include="'Modules/$(VirtoCommerce.Catalog)/Scripts/blades/common/templates/ok-cancel.tpl.html'"></div>
-<div class="blade-content">
+<div class="blade-content  __large-wide">
   <div class="blade-inner">
     <form class="form" name="TranslateDescriptionForm">
       <div class="form-group">
         <label class="form-label">Description</label>
         <div class="form-input">
-          <textarea required="" style="height:140px" ng-model="blade.currentEntity.content" ></textarea>
+          <textarea required=""  data-uk-htmleditor="{mode:'tab'}" ng-model="blade.currentEntity.content" ></textarea>
         </div>
       </div>
       <div class="form-group">
@@ -22,9 +22,41 @@
       <div class="form-group">
         <label class="form-label">Result</label>
         <div class="form-input">
-          <textarea id="result" style="height:140px" ng-model="result" readonly></textarea>
+          <textarea id="result" vc-uk-htmleditor="{mode:'tab'}" ng-model="result" readonly></textarea>
         </div>
       </div>
     </form>
   </div>
 </div>
+
+<style>
+  .uk-htmleditor-toolbar {
+    display: none !important;
+  }
+  .uk-htmleditor-preview{
+    height: 200px !important;
+  }
+
+  .uk-htmleditor-code {
+    height: 200px !important;
+  }
+
+  .CodeMirror-vscrollbar{
+    overflow : hidden;
+    div {
+          height : 0px;
+          width : 0px;
+        }
+  }
+
+  .uk-htmleditor-code,
+  .uk-htmleditor-preview {
+    overflow-y : auto;/* Ensure that the overflow property is set */
+  }
+
+  .uk-htmleditor-code::-webkit-scrollbar,
+  .uk-htmleditor-preview::-webkit-scrollbar {
+    width: 8px;  
+  }
+
+</style>

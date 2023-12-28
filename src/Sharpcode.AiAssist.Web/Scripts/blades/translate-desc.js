@@ -22,10 +22,15 @@ angular.module('AiAssistModule')
                 openAiService.translateDescription(translateRequest).then(
                     function (result) {
                         blade.isLoading = false;
-                        $scope.result = result.data
-                        if ($scope.result) {
+                        if (result.data) {
                             $scope.isValid = true
                         }
+                        $timeout(function () {
+                            var cleanedContent = result.data.replace(/html/g, '').replace(/```/g, '');
+                            $scope.result = cleanedContent 
+                            $scope.$broadcast('resetContent', { body: $scope.result });
+                            blade.isLoading = false;
+                        });                     
                     })
             };
 
@@ -64,7 +69,7 @@ angular.module('AiAssistModule')
                         $scope.translate();
                     },
                     canExecuteMethod: function (blade) {
-                        return true;
+                        return blade.currentEntity.content && blade.currentEntity.languageCode;
                     }
 
                 },
