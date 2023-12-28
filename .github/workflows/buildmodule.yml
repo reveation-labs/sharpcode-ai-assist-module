@@ -42,8 +42,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
-          tag_name: ${{ VERSION_SUFFIX }}
-          release_name: ${{ VERSION_SUFFIX }}
+          tag_name: ${{ env.VERSION_SUFFIX }}
+          release_name: ${{ env.VERSION_SUFFIX }}
           draft: false
           prerelease: false
 
