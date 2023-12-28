@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
   <id>Sharpcode.AiAssistModule</id>
-  <version>3.200.0</version>
+  <version>1.0.0-beta</version>
   <version-tag></version-tag>
 
   <platformVersion>3.253.1</platformVersion>

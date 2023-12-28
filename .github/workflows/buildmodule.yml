@@ -1,4 +1,4 @@
-name: Build Module
+name: Build and Release Module
 on:
   push:
     branches:
