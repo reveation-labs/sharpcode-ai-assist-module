@@ -26,8 +26,8 @@ jobs:
 
       - name: List Directory Contents
         run: |
-          ls -al
-          
+          ls artifacts
+
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         with:
