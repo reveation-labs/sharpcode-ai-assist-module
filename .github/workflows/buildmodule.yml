@@ -38,6 +38,13 @@ jobs:
           release_name: ${{ steps.artifact_ver.outputs.prefix }}
           draft: false
           prerelease: false
+          body: |
+            **:target: Development** 
+            *Added Features: *          
+            - Product_Description_Generation: "Generate SEO-friendly product descriptions effortlessly."
+            - Translation_Capabilities: "Translate product details across multiple languages."
+            - Rephrasing_Features: "Refine and ensure unique product content."
+            - Image_Generation: "AI-powered creation of high-quality product images."
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
