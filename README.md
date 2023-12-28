@@ -38,6 +38,7 @@ An overview of the module's features, functionalities, and how users can leverag
   - Define the length of the generated description.
   - Optionally, activate the setting to incorporate your product attributes within the prompt.
   - Upon clicking on Ok button, it will appear on Description Blade, where it can be saved. 
+
   ![image](https://github.com/reveation-labs/virto-openai-module/assets/109058690/64562745-d2bd-4811-9a56-a103a6def1f1)
 
 ---
@@ -48,6 +49,7 @@ An overview of the module's features, functionalities, and how users can leverag
   - Select the description you want to translate.
   - Choose the language you want to translate in.
   - Click on Ok to view it in Description Blade.
+
   ![image](https://github.com/reveation-labs/virto-openai-module/assets/109058690/5bfc63c5-b8d9-47a4-a518-89a97ed03e0d)
 
 ---
@@ -72,7 +74,9 @@ An overview of the module's features, functionalities, and how users can leverag
   - Click on Ok to save the images.
 
   ![image](https://github.com/reveation-labs/virto-openai-module/assets/109058690/7f49fe38-b4d1-47dc-8691-4f73b6866e2a)
+
   ![image](https://github.com/reveation-labs/virto-openai-module/assets/109058690/2c2d6020-b9c4-4689-992c-382d5474cc82)
+
   ![image](https://github.com/reveation-labs/virto-openai-module/assets/109058690/4e3f23c5-383c-4516-a789-6dd93c358274)
 
 
