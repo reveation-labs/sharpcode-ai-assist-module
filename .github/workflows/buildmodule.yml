@@ -37,6 +37,8 @@ jobs:
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
           asset_path: ./artifacts/Sharpcode.AiAssistModule_3.200.0.zip
