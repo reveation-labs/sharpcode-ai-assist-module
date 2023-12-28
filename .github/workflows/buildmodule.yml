@@ -28,22 +28,14 @@ jobs:
         uses: VirtoCommerce/vc-github-actions/get-image-version@master
         id: artifact_ver
 
-      - name: Set VERSION_SUFFIX variable
-        run: |
-          if [ '${{ github.event_name }}' = 'workflow_dispatch' ]; then
-            echo "VERSION_SUFFIX=${{ steps.artifact_ver.outputs.fullSuffix }}" >> $GITHUB_ENV
-          else
-            echo "VERSION_SUFFIX=${{ steps.artifact_ver.outputs.suffix }}" >> $GITHUB_ENV
-          fi;
-
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
-          tag_name: ${{ env.VERSION_SUFFIX }}
-          release_name: ${{ env.VERSION_SUFFIX }}
+          tag_name: ${{ steps.artifact_ver.outputs.prefix }}
+          release_name: ${{ steps.artifact_ver.outputs.prefix }}
           draft: false
           prerelease: false
 
@@ -53,6 +45,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./artifacts/Sharpcode.AiAssistModule_3.200.0.zip
-          asset_name: Sharpcode.AiAssistModule_3.200.0.zip
+          asset_path: ./artifacts/Sharpcode.AiAssistModule_${{ steps.artifact_ver.outputs.prefix }}.zip
+          asset_name: Sharpcode.AiAssistModule_${{ steps.artifact_ver.outputs.prefix }}.zip
           asset_content_type: application/zip
