@@ -38,10 +38,8 @@ An overview of the module's features, functionalities, and how users can leverag
   - Define the length of the generated description.
   - Optionally, activate the setting to incorporate your product attributes within the prompt.
   - Upon clicking on Ok button, it will appear on Description Blade, where it can be saved. 
+ ![image](https://github.com/reveation-labs/virto-openai-module/assets/109058690/64562745-d2bd-4811-9a56-a103a6def1f1)
 
-  ![image](https://github.com/reveation-labs/virto-openai-module/assets/109058690/64562745-d2bd-4811-9a56-a103a6def1f1)
-
----
 
 - ### Feature : Description Translation
   Expand your market reach by effortlessly translating product descriptions into multiple languages.
@@ -49,17 +47,13 @@ An overview of the module's features, functionalities, and how users can leverag
   - Select the description you want to translate.
   - Choose the language you want to translate in.
   - Click on Ok to view it in Description Blade.
+ ![image](https://github.com/reveation-labs/virto-openai-module/assets/109058690/5bfc63c5-b8d9-47a4-a518-89a97ed03e0d)
 
-  ![image](https://github.com/reveation-labs/virto-openai-module/assets/109058690/5bfc63c5-b8d9-47a4-a518-89a97ed03e0d)
-
----
 
 - ### Feature : Description Rephrasing
   Ensure content uniqueness and clarity with rephrasing functionalities.
-  
   ![image](https://github.com/reveation-labs/virto-openai-module/assets/109058690/313915bf-e1e4-4953-9ccc-8c0c858ea249)
 
----
 
 - ### Feature : Image Generation
   Elevate your product visuals with AI-powered image generation capabilities.
