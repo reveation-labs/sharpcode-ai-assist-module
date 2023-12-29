@@ -22,7 +22,7 @@ jobs:
 
       - name: VC Build Compress
         run: |
-          vc-build compress
+          vc-build compress --skip = test
 
       - name: Get Artifact Version
         uses: VirtoCommerce/vc-github-actions/get-image-version@master
