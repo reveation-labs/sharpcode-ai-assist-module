@@ -20,7 +20,7 @@ namespace Sharpcode.AiAssistModule.Core.Models
 
         public OI.Quality Quality { get; set; } = OI.Quality.standard;
 
-        public OI.ResponseFormat ResponseFormat { get; set; } = OI.ResponseFormat.url;
+        public OI.ResponseFormat ResponseFormat { get; set; } = OI.ResponseFormat.b64_json;
 
         public OI.Size Size { get; set; } = OI.Size.Size1024x1024;
 

@@ -11,7 +11,6 @@ using Sharpcode.AiAssistModule.Core.Services;
 using OpenAI.ObjectModels.RequestModels;
 using OpenAI.ObjectModels;
 using System.Diagnostics;
-/*using System.Text.Json.Serialization;*/
 using Newtonsoft.Json;
 using Sharpcode.AiAssistModule.Core.Models;
 using Sharpcode.AiAssistModule.Core.Utilities;
