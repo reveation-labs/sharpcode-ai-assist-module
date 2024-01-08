@@ -5,11 +5,16 @@ This module facilitates the generation, translation, and rephrasing of product d
 
 
 ## Table of Contents
-1. [Setup]()
+1. [Setup](#setup)
 2. [User Guide](#user-guide)
      <details>
       <summary>Features</summary>
-    </details>
+
+      1. [Description Generation](#feature--description-generation)
+      2. [Description Translation](#feature--description-translation)
+      3. [Description Rephrasing](#feature--description-rephrasing)
+      4. [Image Generation](#feature--image-generation)
+     </details>
 3. [License](#license)
 
 ## Setup
