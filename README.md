@@ -1,8 +1,10 @@
 # AI Assist Module for VirtoCommerce
 
 ## Overview
-This module facilitates the generation, translation, and rephrasing of product descriptions using OpenAI. Additionally, it can be utilized for creating images for your products.
+Enhance your VirtoCommerce platform with the Virto AI Assist Module. This module facilitates the generation, translation, and rephrasing of product descriptions using OpenAI. Additionally, it provides capabilities for creating AI-powered images for your products.
 
+![ImageGeneration](https://github.com/reveation-labs/sharpcode-ai-assist-module/assets/109058690/6a02a47f-233c-426e-9d99-37183583d66e)
+![DescGeneration](https://github.com/reveation-labs/sharpcode-ai-assist-module/assets/109058690/8aad3595-f9a1-413d-a0bb-96788adf2c98)
 
 ## Table of Contents
 1. [Setup](#setup)
@@ -34,7 +36,7 @@ To choose text based gpt models go to Platform -> Settings -> AiAssistModule -> 
 
 
 ## User Guide
-An overview of the module's features, functionalities, and how users can leverage them within the VirtoCommerce platform.
+An overview of the module's features, functionalities, and how users can leverage them within the VirtoCommerce platform using the Virto AI Assist Module.
 
 ### Feature : Description Generation
   **Enhance your product listings with SEO-optimized descriptions. Generate compelling and unique content to captivate your audience.**
