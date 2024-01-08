@@ -5,11 +5,12 @@ This module facilitates the generation, translation, and rephrasing of product d
 
 
 ## Table of Contents
-1. Setup
-2. User Guide
-    - Features and Usage
-3. License
-
+1. [Setup]()
+2. [User Guide](#user-guide)
+     <details>
+      <summary>Features</summary>
+    </details>
+3. [License](#license)
 
 ## Setup
 To begin using this module, add the following block to the appsettings.json file in your platform:
@@ -30,7 +31,7 @@ To choose text based gpt models go to Platform -> Settings -> AiAssistModule -> 
 ## User Guide
 An overview of the module's features, functionalities, and how users can leverage them within the VirtoCommerce platform.
 
-- ### Feature : Description Generation
+### Feature : Description Generation
   **Enhance your product listings with SEO-optimized descriptions. Generate compelling and unique content to captivate your audience.**
 
   Input the following details:-
@@ -45,7 +46,7 @@ An overview of the module's features, functionalities, and how users can leverag
 
 
 
-- ### Feature : Description Translation
+### Feature : Description Translation
   **Expand your market reach by effortlessly translating product descriptions into multiple languages.**
 
   Input the following details:-
@@ -57,7 +58,7 @@ An overview of the module's features, functionalities, and how users can leverag
 
 
 
-- ### Feature : Description Rephrasing
+### Feature : Description Rephrasing
   **Ensure content uniqueness and clarity with rephrasing functionalities.**
 
   - Select the description whose content you wish to rephrase
@@ -67,7 +68,7 @@ An overview of the module's features, functionalities, and how users can leverag
 
 
 
-- ### Feature : Image Generation
+### Feature : Image Generation
   **Elevate your product visuals with AI-powered image generation capabilities.**
 
   Go to product images, click on add and open generate blade.
