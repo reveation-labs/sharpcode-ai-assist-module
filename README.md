@@ -1,4 +1,4 @@
-# AI Assist Module for VirtoCommerce
+# AI Assist Module for Virto Commerce
 
 ## Overview
 Enhance your VirtoCommerce platform with the Virto AI Module. This module facilitates the generation, translation, and rephrasing of product descriptions using OpenAI. Additionally, it provides capabilities for creating AI-powered images for your products.
